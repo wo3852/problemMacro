@@ -9,8 +9,10 @@ def start():
     pd.init()  # 초기 값 시작
     pd.page_start() # 드라이버에서 프로그래머스 홈페이지 열기
     pd.login()  # 드라이버에서 제이슨 정보 확인 후 로그인
+    
     pd.search() # 드라이버에서 검색 옵션 클릭
-
+    
+    
     page_list = pd.driver.find_element_by_xpath("/html/body/div[3]/div/div[3]/div/section/div[2]/div/div/div[1]/div/nav/ul").find_elements_by_tag_name("li")
     title_list = []
     #
@@ -18,16 +20,9 @@ def start():
 
     checkListFileR = open("checklist.txt", 'r', encoding="UTF-8")
     checkList = checkListFileR.readlines()
-    count = 0
+    count = len(checkList)
 
     dt_datetime = datetime.datetime.now()
-
-    for i in range(len(checkList)):
-        if "//" not in checkList[i]:continue
-        name,c = checkList[i].split("//")
-        checkList[i] = name
-        c = int(c.replace("\n",""))
-        count = c
 
     for page in range(1,len(page_list)-1):
         time.sleep(1)
@@ -42,7 +37,7 @@ def start():
             time.sleep(0.25)
             if s in checkList:continue
             checkListFileW = open("checklist.txt", 'a', encoding="UTF-8")
-            checkListFileW.write(s+"//"+str(count+1)+"\n")
+            checkListFileW.write(s + "\n")
             checkListFileW.close()
             print(s)
             pd.driver.find_element_by_partial_link_text(s).send_keys(Keys.ENTER)
@@ -59,6 +54,7 @@ def start():
             pd.soup_start()
             f.write(ProDef.get_explanation(pd.soup.find("div", "markdown solarized-dark").contents))
             f.write(ProDef.get_code(pd.soup.find_all(attrs={'class': 'CodeMirror-line'})))
+            
             f.close()
             pd.driver.back()
             count += 1

@@ -35,6 +35,7 @@ class ProDef:
 
     def page_start(self): # 드라이버에서 사이트 접근
         self.driver.get("https://programmers.co.kr/learn/challenges")
+        
 
     def login(self): #json 파일에서 로그인 정보 파싱 후 로그인
         self.driver.find_element_by_partial_link_text('로그인').click()
@@ -42,14 +43,16 @@ class ProDef:
         self.driver.find_element_by_id('user_password').send_keys(self.json_object["user_password"])
         self.driver.find_element_by_id('btn-sign-in').click()
         time.sleep(1)
+        
 
     def search(self): # 검색조건 클릭
         self.driver.find_element_by_xpath(
             '/html/body/div[3]/div/div[3]/div/section/div[1]/div[1]/div[1]/div[2]/button').click()
+        
         self.driver.find_element_by_xpath(
             '/html/body/div[3]/div/div[3]/div/section/div[1]/div[1]/div[1]/div[2]/div/div[1]/label/input').click()
         time.sleep(1)
-
+        
     def soup_start(self): # soup 드라이버 html 코드 새로고침
         self.soup = BeautifulSoup(self.driver.page_source, "html.parser")
 

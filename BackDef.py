@@ -37,11 +37,13 @@ class BackDef:
 
     def page_start(self):  # 드라이버에서 사이트 접근
         self.driver.get("https://www.acmicpc.net/")
+        
 
     def login(self):  # json 파일에서 로그인 정보 파싱 후 로그인
         self.driver.find_element_by_partial_link_text("로그인").click()
         self.driver.find_element_by_xpath("/html/body/div[2]/div[3]/div/div/form/div[2]/input").send_keys("wo3852@naver.com")
         self.driver.find_element_by_xpath("/html/body/div[2]/div[3]/div/div/form/div[3]/input").send_keys("jw9868")
+        
         self.driver.find_element_by_xpath("/html/body/div[2]/div[3]/div/div/form/div[4]/div[2]/button").click()
         input("넘어가려면 엔터를 누르세요")
         time.sleep(1)
@@ -56,6 +58,7 @@ class BackDef:
             "/html/body/div[2]/div[2]/div[5]/div/form/fieldset[1]/div/fieldset/section[1]/div/label[1]/i").click()
         self.driver.find_element_by_xpath(
             "/html/body/div[2]/div[2]/div[5]/div/form/fieldset[2]/div/fieldset[1]/section[2]/div/label[1]/i").click()
+        
         self.driver.find_element_by_xpath("/html/body/div[2]/div[2]/div[5]/div/form/footer/button[1]").click()
         time.sleep(0.5)
 

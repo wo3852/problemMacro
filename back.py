@@ -8,23 +8,16 @@ def start():
 
     checkListFileR = open("checklist.txt", 'r', encoding="UTF-8")
     checkList = checkListFileR.readlines()
-    count = 0
-    dt_datetime = datetime.datetime.now()
-
-
     for i in range(len(checkList)):
-        if "//" not in checkList[i]:continue
-        name,c = checkList[i].split("//")
-        checkList[i] = name
-        c = int(c.replace("\n",""))
-        count = c
+        checkList[i] = checkList[i].replace("\n","")
+    count = len(checkList)
+    dt_datetime = datetime.datetime.now()
 
     bd = BackDef.BackDef()
     bd.init()
     bd.page_start()
     # 로그인
     bd.login()
-
     # 옵션세팅
     bd.search()
     # 문제 선택
@@ -42,7 +35,7 @@ def start():
         for i in name_list:
             if i in checkList: continue
             checkListFileW = open("checklist.txt", 'a', encoding="UTF-8")
-            checkListFileW.write(i + "//" + str(count + 1) + "\n")
+            checkListFileW.write(i + "\n")
             checkListFileW.close()
             print(i)
             bd.driver.find_element_by_link_text(i).send_keys(Keys.ENTER)
@@ -61,6 +54,7 @@ def start():
 
             bd.driver.find_element_by_partial_link_text("내 제출").click()
             bd.driver.find_element_by_xpath("/html/body/div[2]/div[2]/div[3]/div[6]/div/table/tbody/tr[1]/td[7]/a[1]").click()
+            
             bd.soup_start()
             f.write(BackDef.get_code(bd.soup.find("div", "CodeMirror-code").find_all("div"),bd.driver))
             f.close()
